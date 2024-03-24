@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
 using MySqlConnector;
@@ -7,7 +8,7 @@ namespace FirebaseSingUp
 {
     public partial class Login : Form
     {
-        MySqlConnection connection = new MySqlConnection("datasource=localhost;port=3306;username=root;password=");
+        MySqlConnection connection = new MySqlConnection("SERVER= triploo.site;PORT=3306;DATABASE=id21566778_studeelogin;UID=id21566778_studeelogin;PASSWORD=Gd%7%nsn");
         MySqlCommand command;
         MySqlDataReader mdr;
 
@@ -15,18 +16,22 @@ namespace FirebaseSingUp
         {
             InitializeComponent();
         }
-        
+
         private void btnLogin_Click(object sender, EventArgs e)
         {
-            if (string.IsNullOrEmpty(userText.Text) || string.IsNullOrEmpty(passText.Text))
+            try
             {
-                MessageBox.Show("Please input Username and Password", "Error");
-            }
-            else
-            {
+                if (string.IsNullOrEmpty(userText.Text) || string.IsNullOrEmpty(passText.Text))
+                {
+                    MessageBox.Show("Please input Username and Password", "Error");
+                    return;
+                }
+
                 connection.Open();
-                string selectQuery = "SELECT * FROM loginform.userinfo WHERE Username = '" + userText.Text + "' AND Password = '" + passText.Text + "';";
+                string selectQuery = "SELECT * FROM userinfo WHERE Username = @Username AND Password = @Password";
                 command = new MySqlCommand(selectQuery, connection);
+                command.Parameters.AddWithValue("@Username", userText.Text);
+                command.Parameters.AddWithValue("@Password", passText.Text);
                 mdr = command.ExecuteReader();
                 if (mdr.Read())
                 {
@@ -34,15 +39,26 @@ namespace FirebaseSingUp
                     this.Hide();
                     LoginSuccess frm2 = new LoginSuccess();
                     frm2.ShowDialog();
+
                 }
                 else
                 {
                     MessageBox.Show("Incorrect Login Information! Try again.");
                 }
-
-                connection.Close();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error occurred: " + ex.Message, "Error");
+            }
+            finally
+            {
+                if (connection.State == ConnectionState.Open)
+                {
+                    connection.Close();
+                }
             }
         }
+
 
         private void toReg_Click(object sender, EventArgs e)
         {
