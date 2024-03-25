@@ -8,7 +8,7 @@ namespace FirebaseSingUp
 {
     public partial class Login : Form
     {
-        MySqlConnection connection = new MySqlConnection("SERVER= triploo.site;PORT=3306;DATABASE=id21566778_studeelogin;UID=id21566778_studeelogin;PASSWORD=Gd%7%nsn");
+        MySqlConnection connection = new MySqlConnection("Host=sql6.freesqldatabase.com;Database=sql6694070;User Id=sql6694070;Password=4xc4UidE5S;Port=3306;");
         MySqlCommand command;
         MySqlDataReader mdr;
 
