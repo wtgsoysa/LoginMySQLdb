@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Data;
+using System.Drawing;
 using System.Windows.Forms;
 using MySqlConnector;
 
@@ -7,7 +7,7 @@ namespace FirebaseSingUp
 {
     public partial class Register : Form
     {
-        MySqlConnection connection = new MySqlConnection("Host=sql6.freesqldatabase.com;Database=sql6694070;User Id=sql6694070;Password=4xc4UidE5S;Port=3306;");
+        MySqlConnection connection = new MySqlConnection("server=localhost;database=loginform;port=3306;username=root;password=");
 
         public Register()
         {
@@ -18,7 +18,7 @@ namespace FirebaseSingUp
         {
             try
             {
-                if (string.IsNullOrEmpty(fullText.Text) || string.IsNullOrEmpty(userText.Text) || string.IsNullOrEmpty(passText.Text))
+                if (string.IsNullOrEmpty(fullText.Text) || string.IsNullOrEmpty(userEmail.Text) || string.IsNullOrEmpty(passText.Text))
                 {
                     MessageBox.Show("Please fill out all information!", "Error");
                     return;
@@ -28,7 +28,7 @@ namespace FirebaseSingUp
 
                 MySqlCommand cmd1 = new MySqlCommand("SELECT * FROM userinfo WHERE Username = @UserName", connection);
 
-                cmd1.Parameters.AddWithValue("@UserName", userText.Text);
+                cmd1.Parameters.AddWithValue("@UserName", userEmail.Text);
 
                 bool userExists = false;
 
@@ -37,11 +37,24 @@ namespace FirebaseSingUp
 
                 if (!userExists)
                 {
-                    string iquery = "INSERT INTO userinfo(`ID`, `FirstName`, `Username`, `Password`) VALUES (NULL, @FullName, @UserName, @Password)";
+                    string iquery = "INSERT INTO userinfo(`ID`, `FirstName`, `Username`,`Occupation`, `Password`,`ProfileImage`) VALUES (NULL, @FullName, @UserName,@Occupation, @Password, @ProfileImage)";
                     MySqlCommand commandDatabase = new MySqlCommand(iquery, connection);
                     commandDatabase.Parameters.AddWithValue("@FullName", fullText.Text);
-                    commandDatabase.Parameters.AddWithValue("@UserName", userText.Text);
+                    commandDatabase.Parameters.AddWithValue("@Occupation", UserOccupation.Text);
+                    commandDatabase.Parameters.AddWithValue("@UserName", userEmail.Text);
                     commandDatabase.Parameters.AddWithValue("@Password", passText.Text);
+
+                    // Convert the image to a byte array and insert it into the database
+                    if (btnUploard.Image != null)
+                    {
+                        byte[] imageData = ImageToByteArray(btnUploard.Image);
+                        commandDatabase.Parameters.AddWithValue("@ProfileImage", imageData);
+                    }
+                    else
+                    {
+                        commandDatabase.Parameters.AddWithValue("@ProfileImage", DBNull.Value); // If no image is selected, insert null into the database
+                    }
+
                     commandDatabase.CommandTimeout = 60;
 
                     commandDatabase.ExecuteNonQuery();
@@ -59,7 +72,6 @@ namespace FirebaseSingUp
             }
         }
 
-
         private void toLogin_Click(object sender, EventArgs e)
         {
             this.Hide();
@@ -67,6 +79,24 @@ namespace FirebaseSingUp
             frm4.ShowDialog();
         }
 
-        
+        private void btnUploard_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Image Files|*.jpg;*.jpeg;*.png;*.gif";
+            openFileDialog.Title = "Select an Image File";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                // Display the selected image in the PictureBox
+                btnUploard.Image = new Bitmap(openFileDialog.FileName);
+            }
+        }
+
+        // Method to convert Image to byte array
+        private byte[] ImageToByteArray(Image image)
+        {
+            ImageConverter converter = new ImageConverter();
+            return (byte[])converter.ConvertTo(image, typeof(byte[]));
+        }
     }
 }

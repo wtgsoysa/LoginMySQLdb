@@ -53,7 +53,7 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(125, 124);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(93, 28);
+            this.label1.Size = new System.Drawing.Size(117, 36);
             this.label1.TabIndex = 1;
             this.label1.Text = "username";
             // 
@@ -62,7 +62,7 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(125, 184);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(90, 28);
+            this.label2.Size = new System.Drawing.Size(113, 36);
             this.label2.TabIndex = 2;
             this.label2.Text = "password";
             // 
@@ -70,14 +70,14 @@
             // 
             this.userText.Location = new System.Drawing.Point(232, 121);
             this.userText.Name = "userText";
-            this.userText.Size = new System.Drawing.Size(209, 31);
+            this.userText.Size = new System.Drawing.Size(209, 37);
             this.userText.TabIndex = 3;
             // 
             // passText
             // 
             this.passText.Location = new System.Drawing.Point(232, 181);
             this.passText.Name = "passText";
-            this.passText.Size = new System.Drawing.Size(209, 31);
+            this.passText.Size = new System.Drawing.Size(209, 37);
             this.passText.TabIndex = 4;
             // 
             // toReg
@@ -97,13 +97,13 @@
             this.label3.Font = new System.Drawing.Font("Poppins SemiBold", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.label3.Location = new System.Drawing.Point(123, 62);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(74, 37);
+            this.label3.Size = new System.Drawing.Size(93, 48);
             this.label3.TabIndex = 12;
             this.label3.Text = "Login";
             // 
             // Login
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(10F, 28F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(12F, 36F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(567, 337);
             this.Controls.Add(this.label3);
