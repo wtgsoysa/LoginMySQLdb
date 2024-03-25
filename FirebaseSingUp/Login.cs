@@ -37,8 +37,9 @@ namespace FirebaseSingUp
                 {
                     MessageBox.Show("Login Successful!");
                     this.Hide();
-                    LoginSuccess frm2 = new LoginSuccess();
-                    frm2.ShowDialog();
+                    string loggedInUsername = userText.Text; // Replace with the actual username obtained during login
+                    LoginSuccess loginSuccessForm = new LoginSuccess(loggedInUsername);
+                    loginSuccessForm.ShowDialog();
 
                 }
                 else
