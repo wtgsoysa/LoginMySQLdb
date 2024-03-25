@@ -67,6 +67,20 @@ namespace FirebaseSingUp
             }
         }
 
+        private Image ResizeImage(Image image, int width, int height)
+        {
+            Bitmap resizedImage = new Bitmap(width, height);
+            using (Graphics graphics = Graphics.FromImage(resizedImage))
+            {
+                graphics.DrawImage(image, 0, 0, width, height);
+            }
+            return resizedImage;
+        }
+
+
+
+
+
         private void button1_Click(object sender, EventArgs e)
         {
             this.Hide();
